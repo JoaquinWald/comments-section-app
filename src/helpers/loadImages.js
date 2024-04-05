@@ -14,7 +14,6 @@ export const loadImages = async () => {
 			}),
 		);
 
-		// console.log(imageURLs);
 		return imageURLs;
 	} catch (error) {
 		console.error(error);

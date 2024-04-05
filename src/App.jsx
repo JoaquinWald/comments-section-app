@@ -1,22 +1,14 @@
 import { Comments } from './components/Comments';
-import { useEffect, useState } from 'react';
-import { loadComments } from './helpers/loadComments';
+import { currentUser } from '../data.json';
 
 function App() {
-	const [comments, setComments] = useState([]);
-
-	useEffect(() => {
-		loadComments()
-			.then((response) => setComments(response))
-
-			.catch((err) => console.error(err));
-	}, []);
+	const currentUserName = currentUser.username;
+	// console.log('currentUserNameeee:', currentUserName);
 
 	return (
 		<main>
-			{comments.map(({ username, content, createdAt, id, score }) => (
-				<Comments key={id} username={username} content={content} createdAt={createdAt} id={id} score={score} />
-			))}
+			<h1>Hello Comments!</h1>
+			<Comments currentUser={currentUserName} />
 		</main>
 	);
 }
