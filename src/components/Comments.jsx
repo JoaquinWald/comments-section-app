@@ -1,56 +1,75 @@
 /* eslint-disable react/prop-types */
-import { v4 as uuidv4 } from 'uuid';
 
+import { collection, onSnapshot } from 'firebase/firestore';
+import { FirebaseDB } from '../firebase/config';
 import { useEffect, useState } from 'react';
-// import { loadComments } from '../helpers/loadComments';
-import Comment from './Comment';
 import { loadImages } from '../helpers/loadImages';
+import Comment from './Comment';
 import CommentForm from './CommentForm';
 import addData from '../helpers/addData';
 import deleteData from '../helpers/deleteData';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { FirebaseDB } from '../firebase/config';
+import { v4 as uuidv4 } from 'uuid';
+import AddReply from '../helpers/AddReply';
 
 export const Comments = ({ currentUser }) => {
-	const [backendComments, setBackendComments] = useState([]);
-	console.log('backendComments', backendComments);
+	const [rootComments, setRootComments] = useState([]);
+	console.log('rootComments', rootComments);
+
+	const [repliesComments, setRepliesComments] = useState([]);
+	console.log('repliesComments', repliesComments);
+
+	const [activeComments, setActiveComments] = useState(null);
+	console.log('activeComments', activeComments);
+
+	const [replyingToUserName, setReplyingToUserName] = useState(null);
+	console.log('replyingToUserName', replyingToUserName);
 
 	const [images, setimages] = useState([]);
 
-	const addComment = (text, replyingTo) => {
-		addData(text, replyingTo);
+	const addReply = (text, replyingToRef, replyingToUser) => {
+		AddReply(text, replyingToRef, replyingToUser);
+		setActiveComments(null);
 	};
 
-	const handleDelete = (idDocu) => {
+	const addComment = (text, replyingToRef, replyingToUser) => {
+		addData(text, replyingToRef, replyingToUser);
+		setActiveComments(null);
+	};
+
+	const handleDelete = (idDocu, idReply) => {
 		if (window.confirm('Sure?')) {
-			deleteData(idDocu);
+			deleteData(idDocu, idReply);
+			// deleteFieldFunc(idDocu);
 		}
 	};
 
 	//Con esto escuchamos todo el tiempo los cambios en la DB y actualizamos BackendComments de acuerdo a la acción realizada
 	useEffect(() => {
-		const unsubscribe = onSnapshot(collection(FirebaseDB, 'comments'), (snapshot) => {
+		const unsubscribe = onSnapshot(collection(FirebaseDB, 'allComments/comments/rootComments'), (snapshot) => {
 			const newComments = [];
 			snapshot.forEach((doc) => {
 				newComments.push({ id: doc.id, ...doc.data() });
 				// console.log('newComments', doc.id);
 			});
-			setBackendComments(newComments);
+			setRootComments(newComments);
 		});
 
 		// Devuelve una función de limpieza para detener la escucha de cambios cuando el componente se desmonta
 		return () => unsubscribe();
 	}, []);
 
-	// useEffect(() => {
-	// 	loadComments()
-	// 		.then((response) => {
-	// 			setBackendComments(response);
-	// 			console.log('responseeeee', response);
-	// 		})
+	useEffect(() => {
+		const unsubscribe = onSnapshot(collection(FirebaseDB, 'allComments/comments/replies'), (snapshot) => {
+			const newComments = [];
+			snapshot.forEach((doc) => {
+				newComments.push({ id: doc.id, ...doc.data() });
+				// console.log('newComments', doc.id);
+			});
+			setRepliesComments(newComments);
+		});
 
-	// 		.catch((err) => console.error(err));
-	// }, []);
+		return () => unsubscribe();
+	}, []);
 
 	useEffect(() => {
 		loadImages()
@@ -65,8 +84,20 @@ export const Comments = ({ currentUser }) => {
 
 	return (
 		<section className='comments-container'>
-			{backendComments.map((backendComment) => (
-				<Comment key={uuidv4()} comments={backendComment} images={images} currentUser={currentUser} handleDelete={handleDelete} />
+			{rootComments.map((rootComment) => (
+				<Comment
+					key={uuidv4()}
+					comments={rootComment}
+					images={images}
+					currentUser={currentUser}
+					handleDelete={handleDelete}
+					replies={repliesComments}
+					activeComments={activeComments}
+					setActiveComments={setActiveComments}
+					addReply={addReply}
+					replyingToUserName={replyingToUserName}
+					setReplyingToUserName={setReplyingToUserName}
+				/>
 			))}
 
 			<CommentForm submitLabel='SEND' handleSubmit={addComment} currentUser={currentUser} images={images} />

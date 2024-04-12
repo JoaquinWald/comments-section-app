@@ -1,26 +1,20 @@
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { FirebaseDB } from '../firebase/config';
 
-const addData = async (text, replyingTo = null) => {
-	await addDoc(collection(FirebaseDB, '/comments'), {
+const addData = async (text, replyingToRef = null, replyingToUser = null) => {
+	await addDoc(collection(FirebaseDB, `/allComments/comments/rootComments`), {
 		content: text,
 		createdAt: Timestamp.fromDate(new Date()),
 		// id: Math.random().toString(36).substring(2, 11),
 		// id: docRef,
-		replyingTo,
+		replyingToRef,
+		replyingToUser,
 		score: 0,
 		user: {
+			image: 'image-juliusomo.png',
 			username: 'juliusomo',
 		},
 		replies: [],
 	});
-	// return docRef;
-
-	//  // Obtener los datos del documento recién agregado
-	//  const docSnap = await getDoc(doc(docRef));
-	//  const docData = docSnap.data();
-
-	//  // Retornar los datos del documento
-	//  return docData;
 };
 export default addData;

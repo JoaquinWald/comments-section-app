@@ -13,7 +13,6 @@ export const loadImages = async () => {
 				return { name: item.name, url };
 			}),
 		);
-
 		return imageURLs;
 	} catch (error) {
 		console.error(error);
