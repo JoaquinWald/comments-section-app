@@ -9,25 +9,26 @@ import CommentForm from './CommentForm';
 import addData from '../helpers/addData';
 import deleteData from '../helpers/deleteData';
 import { v4 as uuidv4 } from 'uuid';
-import AddReply from '../helpers/AddReply';
+import { AddReply as AddReplyApi } from '../helpers/AddReply';
+import { updateComment as updateCommentApi } from '../helpers/updateComment';
+import { updateScore } from '../helpers/updateScore';
 
 export const Comments = ({ currentUser }) => {
 	const [rootComments, setRootComments] = useState([]);
-	console.log('rootComments', rootComments);
+	const sortedRootComments = [...rootComments].sort((a, b) => b.score - a.score);
 
 	const [repliesComments, setRepliesComments] = useState([]);
-	console.log('repliesComments', repliesComments);
+	const sortedReplies = repliesComments.sort((a, b) => new Date(a.createdAt?.seconds).getTime() - new Date(b.createdAt?.seconds).getTime());
+	console.log(sortedReplies);
 
 	const [activeComments, setActiveComments] = useState(null);
-	console.log('activeComments', activeComments);
 
 	const [replyingToUserName, setReplyingToUserName] = useState(null);
-	console.log('replyingToUserName', replyingToUserName);
 
 	const [images, setimages] = useState([]);
 
 	const addReply = (text, replyingToRef, replyingToUser) => {
-		AddReply(text, replyingToRef, replyingToUser);
+		AddReplyApi(text, replyingToRef, replyingToUser);
 		setActiveComments(null);
 	};
 
@@ -36,11 +37,19 @@ export const Comments = ({ currentUser }) => {
 		setActiveComments(null);
 	};
 
-	const handleDelete = (idDocu, idReply) => {
+	const handleDelete = (idDocu) => {
 		if (window.confirm('Sure?')) {
-			deleteData(idDocu, idReply);
-			// deleteFieldFunc(idDocu);
+			deleteData(idDocu);
 		}
+	};
+
+	const updateComment = (text, commentID) => {
+		updateCommentApi(text, commentID);
+		setActiveComments(null);
+	};
+
+	const updateScoreValue = (data) => {
+		updateScore(data);
 	};
 
 	//Con esto escuchamos todo el tiempo los cambios en la DB y actualizamos BackendComments de acuerdo a la acción realizada
@@ -84,19 +93,21 @@ export const Comments = ({ currentUser }) => {
 
 	return (
 		<section className='comments-container'>
-			{rootComments.map((rootComment) => (
+			{sortedRootComments.map((rootComment) => (
 				<Comment
 					key={uuidv4()}
 					comments={rootComment}
 					images={images}
 					currentUser={currentUser}
 					handleDelete={handleDelete}
-					replies={repliesComments}
+					replies={sortedReplies}
 					activeComments={activeComments}
 					setActiveComments={setActiveComments}
 					addReply={addReply}
 					replyingToUserName={replyingToUserName}
 					setReplyingToUserName={setReplyingToUserName}
+					updateComment={updateComment}
+					updateScoreValue={updateScoreValue}
 				/>
 			))}
 

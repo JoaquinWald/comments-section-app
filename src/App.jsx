@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
 	const [currentUser, setCurrentUser] = useState();
-	console.log('currentUser', currentUser);
+	// console.log('currentUser', currentUser);
 
 	useEffect(() => {
 		getCurrentUser()

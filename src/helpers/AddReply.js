@@ -1,7 +1,7 @@
 import { collection, addDoc, Timestamp, doc } from 'firebase/firestore';
 import { FirebaseDB } from '../firebase/config';
 
-const AddReply = async (text, replyingToRef = null, replyingToUser = null) => {
+export const AddReply = async (text, replyingToRef = null, replyingToUser = null) => {
 	const rootCommentRef = doc(FirebaseDB, `/allComments/comments/rootComments/${replyingToRef}`);
 
 	await addDoc(collection(FirebaseDB, `/allComments/comments/replies`), {
@@ -19,4 +19,4 @@ const AddReply = async (text, replyingToRef = null, replyingToUser = null) => {
 		replies: [],
 	});
 };
-export default AddReply;
+// export default AddReply;

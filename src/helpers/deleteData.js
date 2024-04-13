@@ -1,9 +1,9 @@
 import { deleteDoc, doc } from 'firebase/firestore';
 import { FirebaseDB } from '../firebase/config';
 
-const deleteData = async (idDoc, idReply) => {
+const deleteData = async (idDoc) => {
 	const docRef = doc(FirebaseDB, `/allComments/comments/rootComments/${idDoc}`);
-	const replyRef = doc(FirebaseDB, `/allComments/comments/replies/${idReply}`);
+	const replyRef = doc(FirebaseDB, `/allComments/comments/replies/${idDoc}`);
 	await deleteDoc(docRef);
 	await deleteDoc(replyRef);
 
