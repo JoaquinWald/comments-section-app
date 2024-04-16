@@ -16,9 +16,18 @@ const CommentForm = ({ submitLabel, handleSubmit, currentUser = [], images, init
 		<section className='form-container'>
 			<form className='form-main' onSubmit={onSubmit}>
 				<textarea className='form-input' value={text} onChange={(e) => setText(e.target.value)} placeholder='Add a comment...'></textarea>
-				{/* <input type='text' value={text} onChange={(e) => setText(e.target.value)} /> */}
 
-				<div className='form-img-buttons-container'>
+				<div
+					className={`${
+						submitLabel === 'SEND'
+							? 'form-img-buttons-container'
+							: submitLabel === 'Update'
+							? 'form-img-buttons-update-cancel'
+							: submitLabel === 'Reply'
+							? 'form-img-buttons-reply'
+							: ''
+					}`}
+				>
 					<picture className='form-img-container'>
 						<img className='form-img' src={img} alt='' />
 					</picture>

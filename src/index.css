@@ -30,11 +30,14 @@ html, body{
 }
 
 
+/* -------------------- MAIN CONTAINER --------------------- */
 .main-container{
-  max-width: 800px;
+  max-width: 767px;
   margin: 0 auto;
 }
 
+
+/* ----------------------- COMMENTS ---------------------- */
 .comments-container{
   position: relative;
   padding: 30px 10px;
@@ -206,6 +209,8 @@ html, body{
   padding-left: 28px;
 }
 
+
+/* ------------ LINES --------------- */
 .line-replies{
   position: absolute;
   /* top: -10px; */
@@ -232,6 +237,7 @@ html, body{
 }
 
 
+/* ------------------------------------- FORM ------------------------------- */
 .form-main{
   display: grid;
   /* grid-template-columns: 1fr; */
@@ -250,9 +256,21 @@ html, body{
   font-family: 'Rubik', sans-serif;
 }
 .form-img-buttons-container{
+  display: flex;
   margin-top: 14px;
+  justify-content: space-between;
+  align-items: center;
+}
+.form-img-buttons-update-cancel{
+  display: flex;
+  justify-content: end;
+  margin-top: 14px;
+  align-items: center;
+}
+.form-img-buttons-reply{
   display: flex;
   justify-content: space-between;
+  margin-top: 14px;
   align-items: center;
 }
 .form-img{
@@ -285,6 +303,7 @@ html, body{
   opacity: 50%;
 }
 .form-button-update{
+  margin-right: 10px;
   font-size: 1.6rem;
   font-weight: 700;
   padding: 10px 14px;
@@ -298,3 +317,65 @@ html, body{
   opacity: 50%;
 }
 
+
+/* ----------------------------- MODAL ------------------------- */
+.modal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+  max-width: 320px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.modal__title{
+  font-size: 2rem;
+  padding-bottom: 20px;
+}
+.modal__p{
+  font-size: 1.6rem;
+  color: var(--Grayish-Blue);
+}
+.modal__buttons-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.modal__button--cancel{
+  border: none;
+  padding: 10px;
+  background-color: var(--Grayish-Blue);
+  color:var(--White);
+  font-weight: 700;
+  margin-right: 10px;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.modal__button--cancel:hover{
+  opacity: 60%;
+}
+.modal__button--delete{
+  border: none;
+  padding: 10px;
+  background-color: var(--Soft-Red);
+  color:var(--White);
+  font-weight: 700;
+  margin-left: 10px;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.modal__button--delete:hover{
+  opacity: 60%;
+}

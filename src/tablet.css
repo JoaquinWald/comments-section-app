@@ -7,3 +7,104 @@
   grid-template-rows: 50px 1fr;
   padding: 40px;
 } */
+
+.comments-structure{
+  /* display: grid; */
+  grid-template-columns: 60px 1fr;
+  grid-template-rows: 50px 1fr;
+  /* padding: 10px 20px 50px; */
+  margin-top: 20px;
+  background-color: var(--White);
+  border-radius: 10px ;
+  min-height: 150px;
+}
+.comments-structure__header{
+  grid-column-start: 2;
+  grid-row-start: 1;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.comments-structure__paragraph{
+  grid-column-start: 2;
+  min-width: 220px;
+  max-width: 570px;
+  /* text-align-last: auto; */
+  /* font-size: 1.1rem; */
+}
+.comments-structure__footer{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  margin-top: 0;
+}
+.comments-structure__footer--reply{
+  grid-row-start: 1;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--Moderate-blue);
+}
+.comments-structure__footer--score{
+  display: grid;
+  position: relative;
+  top: 30px;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 40px;
+  border-radius: 7px;
+  background-color: var(--Light-gray);
+}
+.comments-structure__footer--score-icons-container{
+  margin: 0 auto;
+}
+.comments-structure__footer--score-number{
+  min-width: 4px;
+  margin-left: 2px;
+}
+
+
+.line-replies{
+  position: absolute;
+  /* top: -10px; */
+  left: 10px;
+  background-color: var(--Light-gray);
+  height: 100%;
+  width: 2px;
+}
+.line-replies::before{
+  content: '';
+  position: absolute;
+  top: -14px;
+  background-color: var(--Light-gray);
+  width: 2px;
+  height: 20px;
+}
+.line-replies::after{
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  background-color: var(--Light-gray);
+  width: 2px;
+  height: 20px;
+}
+
+
+
+.form-container{
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+.form-main{
+  /* display: grid; */
+  /* grid-template-columns: 1fr; */
+  /* grid-column-start: 1;
+  grid-column-end: 2; */
+  grid-template-rows: 100px 1fr;
+  padding: 20px;
+  margin-top: 30px;
+  /* border: solid red 1px; */
+  background-color: var(--White);
+  border-radius: 10px ;
+}

@@ -145,7 +145,14 @@ const Comment = ({
 						)} */}
 				</div>
 
-				{isReplying && <CommentForm submitLabel='Reply' handleSubmit={(text) => addReply(text, replyingToRefID, replyingToUserName)} />}
+				{isReplying && (
+					<CommentForm
+						submitLabel='Reply'
+						handleSubmit={(text) => addReply(text, replyingToRefID, replyingToUserName)}
+						images={images}
+						currentUser={currentUser}
+					/>
+				)}
 
 				{isEditing && (
 					<CommentForm

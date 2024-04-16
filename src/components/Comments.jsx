@@ -7,11 +7,12 @@ import { loadImages } from '../helpers/loadImages';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 import addData from '../helpers/addData';
-import deleteData from '../helpers/deleteData';
+// import deleteData from '../helpers/deleteData';
 import { v4 as uuidv4 } from 'uuid';
 import { AddReply as AddReplyApi } from '../helpers/AddReply';
 import { updateComment as updateCommentApi } from '../helpers/updateComment';
 import { updateScore } from '../helpers/updateScore';
+import { Modal } from './Modal';
 
 export const Comments = ({ currentUser }) => {
 	const [rootComments, setRootComments] = useState([]);
@@ -27,6 +28,9 @@ export const Comments = ({ currentUser }) => {
 
 	const [images, setimages] = useState([]);
 
+	const [modal, setModal] = useState(false);
+	const [idDocu, setIdDocu] = useState(null);
+
 	const addReply = (text, replyingToRef, replyingToUser) => {
 		AddReplyApi(text, replyingToRef, replyingToUser);
 		setActiveComments(null);
@@ -38,9 +42,11 @@ export const Comments = ({ currentUser }) => {
 	};
 
 	const handleDelete = (idDocu) => {
-		if (window.confirm('Sure?')) {
-			deleteData(idDocu);
-		}
+		setIdDocu(idDocu);
+		setModal(true);
+		// if (window.confirm('Sure?')) {
+		// 	// deleteData(idDocu);
+		// }
 	};
 
 	const updateComment = (text, commentID) => {
@@ -93,7 +99,9 @@ export const Comments = ({ currentUser }) => {
 
 	return (
 		<section className='comments-container'>
-			{sortedRootComments.map((rootComment) => (
+			{modal && <Modal isOpen={modal} idDocu={idDocu} onClose={() => setModal(!modal)} />}
+
+			{sortedRootComments?.map((rootComment) => (
 				<Comment
 					key={uuidv4()}
 					comments={rootComment}
