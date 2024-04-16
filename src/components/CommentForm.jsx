@@ -13,18 +13,26 @@ const CommentForm = ({ submitLabel, handleSubmit, currentUser = [], images, init
 	};
 
 	return (
-		<section>
-			<form onSubmit={onSubmit}>
-				<textarea value={text} onChange={(e) => setText(e.target.value)}></textarea>
+		<section className='form-container'>
+			<form className='form-main' onSubmit={onSubmit}>
+				<textarea className='form-input' value={text} onChange={(e) => setText(e.target.value)} placeholder='Add a comment...'></textarea>
 				{/* <input type='text' value={text} onChange={(e) => setText(e.target.value)} /> */}
 
-				<div>
-					<picture>
-						<img src={img} alt='' />
+				<div className='form-img-buttons-container'>
+					<picture className='form-img-container'>
+						<img className='form-img' src={img} alt='' />
 					</picture>
-					<button disabled={isInputDisabled}>{submitLabel}</button>
+
+					<button
+						className={`${submitLabel === 'SEND' ? 'form-button-send' : 'form-button-update'}`}
+						// className='form-button-submit-label'
+						disabled={isInputDisabled}
+					>
+						{submitLabel}
+					</button>
+
 					{hasCancelButton && (
-						<button type='button' onClick={handleCancel}>
+						<button className='form-button-cancel' type='button' onClick={handleCancel}>
 							Cancel
 						</button>
 					)}

@@ -16,7 +16,6 @@ function App() {
 
 	return (
 		<main>
-			<h1>Hello Comments!</h1>
 			<Comments currentUser={currentUser} />
 		</main>
 	);

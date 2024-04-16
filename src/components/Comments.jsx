@@ -19,7 +19,7 @@ export const Comments = ({ currentUser }) => {
 
 	const [repliesComments, setRepliesComments] = useState([]);
 	const sortedReplies = repliesComments.sort((a, b) => new Date(a.createdAt?.seconds).getTime() - new Date(b.createdAt?.seconds).getTime());
-	console.log(sortedReplies);
+	// console.log(sortedReplies);
 
 	const [activeComments, setActiveComments] = useState(null);
 
