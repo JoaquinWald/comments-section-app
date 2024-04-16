@@ -15,7 +15,7 @@ function App() {
 	}, []);
 
 	return (
-		<main>
+		<main className='main-container'>
 			<Comments currentUser={currentUser} />
 		</main>
 	);

@@ -160,6 +160,7 @@ const Comment = ({
 
 			{rep?.map((reply) => (
 				<article key={uuidv4()} className='comments-structure-replies'>
+					<div className='line-replies'></div>
 					<div className='comments-structure-replies__inside'>
 						<Comment
 							// key={uuidv4()}

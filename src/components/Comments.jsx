@@ -110,7 +110,7 @@ export const Comments = ({ currentUser }) => {
 					updateScoreValue={updateScoreValue}
 				/>
 			))}
-
+			{/* <div className='line-replies'></div> */}
 			<CommentForm submitLabel='SEND' handleSubmit={addComment} currentUser={currentUser} images={images} />
 		</section>
 	);
